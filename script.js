@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ${visit.name} - ${visit.cost}₽ в ${visit.startTime}
                     <div class="geoloc">${visit.geoloc}</div>
                 </span> 
-                ${visit.lat ? `<a href="geo:${visit.lat},${visit.lng}"><img src="map_icon.png" class="map-icon" alt="Show on Map"></a>`:''}
+                ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="location.href='https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&z=19&l=map';" alt="Show on Map">`:''}
             </li>
         `).join('');
         
