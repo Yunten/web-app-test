@@ -3,24 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trip Planner</title>
+    <title>City Carousel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 id="city-name">Current City: Placeholder City</h1>
-            <p id="time-until-next">Time until next move: <span id="countdown">Loading...</span></p>
-            <p id="next-city">Next City: Placeholder Next City</p>
-        </header>
-        <section id="planned-visits">
-            <h2>Planned Visits</h2>
-            <ul id="visits-list">
-                <!-- Visits will be dynamically inserted here -->
-            </ul>
-        </section>
+    <div class="carousel-container">
+        <div class="carousel-wrapper">
+            <div class="carousel" id="carousel">
+                <!-- Previous city card -->
+                <div class="carousel-item">
+                    <div class="city-info">
+                        <h1 id="prev-city-name">Previous City</h1>
+                        <p id="prev-city-details">Details about the previous city.</p>
+                    </div>
+                </div>
+                <!-- Current city card -->
+                <div class="carousel-item current-city">
+                    <div class="city-info">
+                        <h1 id="current-city-name">Current City</h1>
+                        <p id="current-city-details">Details about the current city</p>
+                        <ul id="visits-list">
+                            <!-- Planned visits will be dynamically inserted here -->
+                        </ul>
+                        <p>Time until next city: <span id="countdown">--</span></p>
+                    </div>
+                </div>
+                <!-- Next city card -->
+                <div class="carousel-item">
+                    <div class="city-info">
+                        <h1 id="next-city-name">Next City</h1>
+                        <p id="next-city-details">Details about the next city.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="nav-button" id="scroll-up">Up</button>
+        <button class="nav-button" id="scroll-down">Down</button>
+        <button id="to-current-city" class="nav-button">To Current City</button>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
