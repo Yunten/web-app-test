@@ -12,7 +12,7 @@ body {
     position: relative;
     width:90%;
     overflow: hidden;
-    height: 500px;
+    height: 700px;
     margin: 40px auto;
     padding: 20px;
     background-color: #fff;
@@ -50,6 +50,11 @@ body {
     color: #333;
     position: relative;
     background-blend-mode: lighten;
+    background-size: 100% 100%;
+    background-position: 10%;
+}
+.carousel-item .current-city {
+    background-size: 100% 100%;
 }
 
 .current-city {

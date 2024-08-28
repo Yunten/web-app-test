@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const visitsList = document.getElementById('visits-list');
     let countdownElement = document.getElementById('countdown');
 
-    let current_city_index = 3
+    let current_city_index = 0
 
     // Array of cities
     const cities = [
@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             name: 'Ростов',
+            nextMove: Date.parse("2024-09-01 15:00:00"),
             details: 'Папа',
             image:'rst',
             visits: [
@@ -117,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: 'Лазаревское (Сочи)',
             details: '',
+            nextMove: Date.parse("2024-09-04 11:00:00"),
             image:'lazr',
             visits: [
                 {
@@ -126,6 +128,31 @@ document.addEventListener('DOMContentLoaded', function () {
                     startTime: '10:00 AM',
                     geoloc: 'Береговая ул., 47А'
                 }
+            ]
+        },
+        {
+            name: 'Волгоград',
+            details: '',
+            nextMove: Date.parse("2024-09-05 18:00:00"),
+            image:'stlngrd',
+            visits: [
+                {
+                    id: 1,
+                    name: 'Родина мать',
+                    cost: 0,
+                    startTime: '10:00 AM',
+                    geoloc: 'Мамаев курган',
+                    lat: 48.741583,
+                    lng: 44.537209
+                }
+            ]
+        },
+        {
+            name: 'Самара',
+            details: '',
+            nextMove: Date.parse("2024-09-06 18:00:00"),
+            image:'smr',
+            visits: [
             ]
         }
     ];
@@ -142,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (index === current_city_index) cityCard.classList.add('current-city'); // Highlight the current city
 
             cityCard.style.backgroundImage = `url(cities/${city.image}.jpg)`;
-            cityCard.style.backgroundSize = "100% 100%";
 
             cityCard.innerHTML = `
                 <div class="city-info">
@@ -203,7 +229,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function changeCity() {
         current_city_index++
+        carouselIndex = current_city_index
         updateCityInfo()
+        updateCarouselPosition()
     }
 
     // Function to open Yandex Maps with coordinates
