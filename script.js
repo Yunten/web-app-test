@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ${visit.name} - $${visit.cost} at ${visit.startTime}
                     <div class="geoloc">${visit.geoloc}</div>
                 </span>
-                <img src="map-icon.png" class="map-icon" onclick="openYandexMap(${visit.lat}, ${visit.lng})" alt="Show on Map">
+                <img src="map_icon.png" class="map-icon" onclick="openYandexMap(${visit.lat}, ${visit.lng})" alt="Show on Map">
             `;
             visitsList.appendChild(visitItem);
         });
