@@ -10,9 +10,8 @@ body {
 
 .carousel-container {
     position: relative;
-    width: 100%;
+    width:90%;
     overflow: hidden;
-    max-width: 800px;
     height: 500px;
     margin: 40px auto;
     padding: 20px;
@@ -47,7 +46,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
     text-align: center;
-    font-size: 24px;
+    font-size: 18px;
     color: #333;
     position: relative;
     background-blend-mode: lighten;
@@ -119,7 +118,7 @@ body {
 }
 
 .geoloc {
-    font-size: 14px;
+    font-size: 12px;
     color: #555;
 }
 
