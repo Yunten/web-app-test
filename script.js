@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const visitsList = document.getElementById('visits-list');
     let countdownElement = document.getElementById('countdown');
 
-    let current_city_index = 0
+    let current_city_index = 2
 
     // Array of cities
     const cities = [
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: 'Волгоград',
             details: '',
-            nextMove: Date.parse("2024-09-05 18:00:00"),
+            nextMove: Date.parse("2024-09-06 11:00:00"),
             image:'stlngrd',
             visits: [
                 {
@@ -150,8 +150,40 @@ document.addEventListener('DOMContentLoaded', function () {
         {
             name: 'Самара',
             details: '',
-            nextMove: Date.parse("2024-09-06 18:00:00"),
+            nextMove: Date.parse("2024-09-06 15:00:00"),
             image:'smr',
+            visits: [
+            ]
+        },
+        {
+            name: 'Тольятти',
+            details: '',
+            nextMove: Date.parse("2024-09-06 20:00:00"),
+            image:'tlt',
+            visits: [
+            ]
+        },
+        {
+            name: 'Казань',
+            details: '? - брал',
+            nextMove: Date.parse("2024-09-07 19:00:00"),
+            image:'kzn',
+            visits: [
+            ]
+        },
+        {
+            name: 'Нижний Новгород',
+            details: '',
+            nextMove: Date.parse("2024-09-07 22:00:00"),
+            image:'nn',
+            visits: [
+            ]
+        },
+        {
+            name: 'Санкт-Петербург',
+            details: 'Красуйся град Петров и стой неколебимо как Россия &#x1f1f7;&#x1f1fa;',
+            image:'spb',
+            nextMove: Date.parse("2025-08-30 20:00:00"),
             visits: [
             ]
         }
@@ -175,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <h1>${city.name}</h1>
                     <p>${city.details}</p>
                     ${index === current_city_index ? `<ul id="visits-list">${renderVisits(city.visits)}</ul>
-                    <p>Time until next city: <span id="countdown">--</span></p>` : ''}
+                    <p>Время до поездки в следующий город: <span id="countdown">--</span></p>` : ''}
                 </div>
             `;
             countdownElement = document.getElementById('countdown')
@@ -212,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = nextMove - now;
 
         if (distance < 0) {
-            countdownElement.textContent = "Time to move!";
+            countdownElement.textContent = "Время двигаться!";
             changeCity();  // Update to next city
             return;
         }
