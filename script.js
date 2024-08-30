@@ -427,4 +427,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('touchmove', touchMove,{ passive: false })
     document.addEventListener('touchend', touchEnd,{ passive: false })
     document.addEventListener('wheel', mouseWheel,{ passive: false })
+
+    window.Telegram.WebApp.MainButton.text = 'Инфо'
 });
