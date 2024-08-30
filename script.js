@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const toCurrentCityButton = document.getElementById('to-current-city');
     const visitsList = document.getElementById('visits-list');
     let countdownElement = document.getElementById('countdown');
+    let max_height = 0
 
-    let current_city_index = 2
+    let current_city_index = 0
 
     // Array of cities
     const cities = [
@@ -29,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 1,
                     name: 'Музей пряников(магаз)',
                     cost: 0,
-                    startTime: '10:00 AM',
                     geoloc: 'Октябрьская улица, 45',
                     lat: 54.211387,
                     lng: 37.622091
@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 2,
                     name: 'Музей оружия',
                     cost: 550,
-                    startTime: '1:00 PM',
                     geoloc: 'Октябрьская ул., 2',
                     lat: 54.204136,
                     lng: 37.616189
@@ -47,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 3,
                     name: 'Музей оружия',
                     cost: 300,
-                    startTime: '1:00 PM',
                     geoloc: 'Менделеевская улица, 12В',
                     lat: 54.195888,
                     lng: 37.619854
@@ -56,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 4,
                     name: 'ЦПКИО Парк Белоусова',
                     cost: 0,
-                    startTime: '1:00 PM',
                     geoloc: 'Первомайская улица, 13',
                     lat: 54.183671, 
                     lng: 37.585970
@@ -65,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 5,
                     name: 'ресторан Шарден',
                     cost: ':D',
-                    startTime: '1:00 PM',
                     geoloc: 'Советская ул., 11/5',
                     lat: 54.198263,  
                     lng: 37.613305
@@ -82,10 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 1,
                     name: 'Kорабль-музей Гото Предестинация',
                     cost: 100,
-                    startTime: '10:00 AM',
                     geoloc: 'Петровская наб., 21А',
-                    lat: 51.655763,
-                    lng: 39.215621
+                    lat: 51.655969,
+                    lng: 39.215891
                 }
             ]
         },
@@ -99,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 1,
                     name: 'Парамоновские склады',
                     cost: 100,
-                    startTime: '10:00 AM',
                     geoloc: 'Береговая ул., 47А',
                     lat: 47.218310, 
                     lng: 39.726852
@@ -108,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 2,
                     name: 'Ростовский цирк (ворота ;))',
                     cost: 0,
-                    startTime: '10:00 AM',
                     geoloc: 'Будённовский проспект, 45',
                     lat: 47.218310, 
                     lng: 39.726852
@@ -125,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 1,
                     name: 'Чилл',
                     cost: 'бесценно',
-                    startTime: '10:00 AM',
                     geoloc: 'Береговая ул., 47А'
                 }
             ]
@@ -140,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     id: 1,
                     name: 'Родина мать',
                     cost: 0,
-                    startTime: '10:00 AM',
                     geoloc: 'Мамаев курган',
                     lat: 48.741583,
                     lng: 44.537209
@@ -169,6 +160,38 @@ document.addEventListener('DOMContentLoaded', function () {
             nextMove: Date.parse("2024-09-07 19:00:00"),
             image:'kzn',
             visits: [
+                {
+                    id: 1,
+                    name: 'Казанский кремль',
+                    cost: 80,
+                    geoloc: 'проезд Шейнкмана',
+                    lat: 55.797375, 
+                    lng: 49.107347
+                },
+                {
+                    id: 2,
+                    name: 'Дворец земледельцев',
+                    cost: 0,
+                    geoloc: 'Федосеевская ул., 36',
+                    lat: 55.800074,
+                    lng: 49.112179
+                },
+                {
+                    id: 3,
+                    name: 'Колокольня Богоявленского собора',
+                    cost: 0,
+                    geoloc: 'ул. Баумана, 78, корп. 2',
+                    lat: 55.788323, 
+                    lng: 49.119554
+                },
+                {
+                    id: 4,
+                    name: 'Татарский государственный театр кукол Экият',
+                    cost: 0,
+                    geoloc: 'Петербургская ул., 57',
+                    lat: 55.780296, 
+                    lng: 49.138694
+                }
             ]
         },
         {
@@ -216,6 +239,12 @@ document.addEventListener('DOMContentLoaded', function () {
             carousel.appendChild(cityCard);
         });
 
+        if (max_height == 0){
+            const test = carousel.querySelectorAll('.carousel-item')
+            test.forEach((a)=>max_height+= a.offsetHeight)
+            max_height = max_height
+        }
+
         // Start countdown for the current city
         if (cities[current_city_index].nextMove) {
             updateCountdown(cities[current_city_index].nextMove);
@@ -231,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     ${visit.name} - ${visit.cost}₽ в ${visit.startTime}
                     <div class="geoloc">${visit.geoloc}</div>
                 </span>
-                ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="javascript:Telegram.WebApp.openLink('https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&z=19&l=map');" alt="Открыть карту">`:''}
+                ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="javascript:Telegram.WebApp.openLink('https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&pt=${visit.lng},${visit.lat}&z=19&l=map');" alt="Открыть карту">`:''}
             </li>
         `).join('');
         
@@ -255,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownElement.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
 
         setTimeout(() => updateCountdown(nextMove), 1000);
     }
@@ -265,18 +294,6 @@ document.addEventListener('DOMContentLoaded', function () {
         carouselIndex = current_city_index
         updateCityInfo()
         updateCarouselPosition()
-    }
-
-    // Function to open Yandex Maps with coordinates
-    window.openYandexMap = function(lat, lng) {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const url = `https://yandex.ru/maps/?ll=${lng},${lat}&z=19&l=map`;
-
-        if (isMobile) {
-            window.location.href = url;
-        } else {
-            window.open(url, '_blank');
-        }
     }
 
     // Function to handle checkbox state saving and styling
@@ -296,24 +313,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to update carousel position
     carouselIndex = current_city_index
+    current_height = 0
     function updateCarouselPosition() {
-        const itemHeight = carousel.querySelector('.carousel-item').offsetHeight;
-        carousel.style.transform = `translateY(-${carouselIndex * itemHeight}px)`;
+        const itemHeight = carousel.querySelectorAll('.carousel-item').offsetHeight;
+        const test = carousel.querySelectorAll('.carousel-item')
+
+         // test.forEach((a)=>console.log(a))
+
+        let height = 0
+        for (let i = 0; i < carouselIndex; i++) {
+            height+= test[i].offsetHeight + 20;
+            
+        }
+        console.log(`Carousel index is ${carouselIndex} and skipping height ${height}`)
+        carousel.style.transform = `translateY(-${height}px)`;
+        current_height = height
     }
-
-    scrollUpButton.addEventListener('click', function () {
-        if (carouselIndex > 0) {
-            carouselIndex--;
-            updateCarouselPosition();
-        }
-    });
-
-    scrollDownButton.addEventListener('click', function () {
-        if (carouselIndex < carousel.children.length - 1) {
-            carouselIndex++;
-            updateCarouselPosition();
-        }
-    });
 
     toCurrentCityButton.addEventListener('click', function () {
         carouselIndex = current_city_index; // Index of the current city
@@ -321,4 +336,95 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     updateCityInfo();
+    ///////////////////////////////////////////////////////////////////////
+    let startPos = 0
+    let sliderScroll = 0
+    let prevPos = 0
+    let currentPos = 0
+    
+    const slider = document.querySelector('.carousel-container')
+    const slideHeight = document.querySelector('.carousel-item').getBoundingClientRect().height
+
+    enable_blocks = true
+    
+    function getPositionY(event) {
+        return event.touches[0].clientY
+    }
+
+
+    
+    function touchStart(event) {
+        startPos = getPositionY(event)
+
+        slider.classList.remove("smoothscroll")
+
+        if(enable_blocks){
+            if (!event.srcElement || event.srcElement.id !== "to-current-city"){
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+        }
+        last_point = startPos
+
+    }
+    last_point = 0
+    function touchMove(event) {
+        
+        currentPos = getPositionY(event)
+
+        current_height = CalculateHeight(last_point,currentPos)
+        carousel.style.transform = `translateY(-${current_height}px)`;
+        
+
+        CalculateHeight(last_point,currentPos)
+        last_point = currentPos
+
+        if(enable_blocks){
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+        
+    }
+
+    function CalculateHeight(pos_lst,pos_cur){
+        const move_units = (pos_lst - pos_cur)* 1.5
+        //console.log('Add ',move_units, 'Current',current_height,'MAx ',max_height)
+        return Math.max( Math.min( current_height + move_units,max_height),0)
+    }
+    
+    function touchEnd(event) {
+        
+        if(enable_blocks){
+            if (!event.srcElement || event.srcElement.id !== "to-current-city"){
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+        }
+    }
+    
+    let movable = false
+    function mouseDown(event) {
+        startPos = event.y
+        sliderScroll = slider.scrollLeft
+        slider.classList.remove("smoothscroll")
+        movable = true
+    }
+    
+    function mouseMove(event) {
+        if(!movable)
+            return
+        currentPos = event.x
+        slider.scrollLeft = sliderScroll + startPos - currentPos
+    }
+    
+    function mouseWheel(e) {
+        current_height = Math.max( Math.min( current_height+e.deltaY,max_height),0)
+        
+        carousel.style.transform = `translateY(-${current_height}px)`;
+    }
+    
+    document.addEventListener('touchstart', touchStart,{ passive: false })
+    document.addEventListener('touchmove', touchMove,{ passive: false })
+    document.addEventListener('touchend', touchEnd,{ passive: false })
+    document.addEventListener('wheel', mouseWheel,{ passive: false })
 });

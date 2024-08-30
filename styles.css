@@ -7,6 +7,14 @@ body {
     color: #333;
     height: 100%;
 }
+html{
+    scroll-behavior:smooth;
+    overflow-x: hidden;
+ }
+html,
+body {
+    overscroll-behavior-y: contain;
+}
 
 .carousel-container {
     position: relative;
@@ -18,7 +26,12 @@ body {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 3.8s ease-in-out;
+    -webkit-overflow-scrolling: touch; 
+}
+
+.smoothscroll {
+    scroll-behavior: smooth;
 }
 
 
@@ -73,16 +86,6 @@ body {
     font-size: 16px;
     text-align: center;
     line-height: 30px;
-}
-
-#scroll-up {
-    top: 10px;
-    right: 10px;
-}
-
-#scroll-down {
-    bottom: 10px;
-    right: 10px;
 }
 
 #to-current-city {
