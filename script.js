@@ -230,12 +230,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     <input type="checkbox" class="checkbox" id="visit-${visit.id}" data-visit-id="${visit.id}">
                     ${visit.name} - ${visit.cost}₽ в ${visit.startTime}
                     <div class="geoloc">${visit.geoloc}</div>
-                </span> 
-                ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="location.href='https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&z=19&l=map';" alt="Show on Map">`:''}
+                </span>
+                ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="javascript:Telegram.WebApp.openLink('https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&z=19&l=map');" alt="Show on Map">`:''}
             </li>
         `).join('');
         
         //${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="openYandexMap(${visit.lat}, ${visit.lng})" alt="Show on Map">`:''}
+        //https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&z=19&l=map
     }
 
     // Function to update countdown timer
