@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <li>
                 <span>
                     <input type="checkbox" class="checkbox" id="visit-${visit.id}" data-visit-id="${visit.id}">
-                    ${visit.name} - ${visit.cost}₽ в ${visit.startTime}
+                    ${visit.name} - ${visit.cost}₽
                     <div class="geoloc">${visit.geoloc}</div>
                 </span>
                 ${visit.lat ? `<img src="map_icon.png" class="map-icon" onclick="javascript:Telegram.WebApp.openLink('https://yandex.ru/maps/?ll=${visit.lng},${visit.lat}&pt=${visit.lng},${visit.lat}&z=19&l=map');" alt="Открыть карту">`:''}
