@@ -5,212 +5,31 @@ document.addEventListener('DOMContentLoaded', function () {
     const scrollDownButton = document.getElementById('scroll-down');
     const toCurrentCityButton = document.getElementById('to-current-city');
     const visitsList = document.getElementById('visits-list');
+    const url = 'https://my-custom-trip-data-default-rtdb.europe-west1.firebasedatabase.app';
     let countdownElement = document.getElementById('countdown');
     let max_height = 0
 
-    let current_city_index = 3
+    let current_city_index = 0
+    let cities = [];
+
+    const userAction = async () => {
+        const response = await fetch(url+'/data.json');
+        const myJson = await response.json(); //extract JSON from the http response
+        // do something with myJson
+
+        current_city_index = myJson.currentID
+
+        const resp = await fetch(url+'/trip_route.json');
+        const myTripJson = await resp.json(); //extract JSON from the http response
+        console.log(myTripJson)
+        cities = myTripJson
+        updateCityInfo()
+        updateCarouselPosition()
+      }
+      userAction()
 
     // Array of cities
-    const cities = [
-        {
-            name: 'Санкт-Петербург',
-            details: 'Красуйся град Петров и стой неколебимо как Россия &#x1f1f7;&#x1f1fa;',
-            image:'spb',
-            nextMove: Date.parse("2024-08-30 20:00:00"),
-            visits: [
-            ]
-        },
-        {
-            name: 'Тула',
-            details: 'Пряничный город',
-            image:'tula',
-            nextMove: Date.parse("2024-08-31 14:00:00"),
-            visits: [
-                {
-                    id: 1,
-                    name: 'Музей пряников(магаз)',
-                    cost: 0,
-                    geoloc: 'Октябрьская улица, 45',
-                    lat: 54.211387,
-                    lng: 37.622091
-                },
-                {
-                    id: 2,
-                    name: 'Музей оружия',
-                    cost: 550,
-                    geoloc: 'Октябрьская ул., 2',
-                    lat: 54.204136,
-                    lng: 37.616189
-                },
-                {
-                    id: 3,
-                    name: 'Музей оружия',
-                    cost: 300,
-                    geoloc: 'Менделеевская улица, 12В',
-                    lat: 54.195888,
-                    lng: 37.619854
-                },
-                {
-                    id: 4,
-                    name: 'ЦПКИО Парк Белоусова',
-                    cost: 0,
-                    geoloc: 'Первомайская улица, 13',
-                    lat: 54.183671, 
-                    lng: 37.585970
-                },
-                {
-                    id: 5,
-                    name: 'ресторан Шарден',
-                    cost: ':D',
-                    geoloc: 'Советская ул., 11/5',
-                    lat: 54.198263,  
-                    lng: 37.613305
-                }
-            ]
-        },
-        {
-            name: 'Воронеж',
-            nextMove: Date.parse("2024-08-31 20:00:00"),
-            details: 'Город строителей флота🤔 (так говорят)',
-            image:'vrnz',
-            visits: [
-                {
-                    id: 1,
-                    name: 'Kорабль-музей Гото Предестинация',
-                    cost: 100,
-                    geoloc: 'Петровская наб., 21А',
-                    lat: 51.655969,
-                    lng: 39.215891
-                }
-            ]
-        },
-        {
-            name: 'Ростов',
-            nextMove: Date.parse("2024-09-01 15:00:00"),
-            details: 'Папа',
-            image:'rst',
-            visits: [
-                {
-                    id: 1,
-                    name: 'Парамоновские склады',
-                    cost: 100,
-                    geoloc: 'Береговая ул., 47А',
-                    lat: 47.218310, 
-                    lng: 39.726852
-                },
-                {
-                    id: 2,
-                    name: 'Ростовский цирк (ворота ;))',
-                    cost: 0,
-                    geoloc: 'Будённовский проспект, 45',
-                    lat: 47.218310, 
-                    lng: 39.726852
-                }
-            ]
-        },
-        {
-            name: 'Лазаревское (Сочи)',
-            details: 'Звучит хайпово',
-            nextMove: Date.parse("2024-09-04 11:00:00"),
-            image:'lazr',
-            visits: [
-                {
-                    id: 1,
-                    name: 'Чилл',
-                    cost: 'бесценно',
-                    geoloc: 'Береговая ул., 47А'
-                }
-            ]
-        },
-        {
-            name: 'Волгоград',
-            details: '',
-            nextMove: Date.parse("2024-09-06 11:00:00"),
-            image:'stlngrd',
-            visits: [
-                {
-                    id: 1,
-                    name: 'Родина мать',
-                    cost: 0,
-                    geoloc: 'Мамаев курган',
-                    lat: 48.741583,
-                    lng: 44.537209
-                }
-            ]
-        },
-        {
-            name: 'Самара',
-            details: '',
-            nextMove: Date.parse("2024-09-06 15:00:00"),
-            image:'smr',
-            visits: [
-            ]
-        },
-        {
-            name: 'Тольятти',
-            details: '',
-            nextMove: Date.parse("2024-09-06 20:00:00"),
-            image:'tlt',
-            visits: [
-            ]
-        },
-        {
-            name: 'Казань',
-            details: '? - брал',
-            nextMove: Date.parse("2024-09-07 19:00:00"),
-            image:'kzn',
-            visits: [
-                {
-                    id: 1,
-                    name: 'Казанский кремль',
-                    cost: 80,
-                    geoloc: 'проезд Шейнкмана',
-                    lat: 55.797375, 
-                    lng: 49.107347
-                },
-                {
-                    id: 2,
-                    name: 'Дворец земледельцев',
-                    cost: 0,
-                    geoloc: 'Федосеевская ул., 36',
-                    lat: 55.800074,
-                    lng: 49.112179
-                },
-                {
-                    id: 3,
-                    name: 'Колокольня Богоявленского собора',
-                    cost: 0,
-                    geoloc: 'ул. Баумана, 78, корп. 2',
-                    lat: 55.788323, 
-                    lng: 49.119554
-                },
-                {
-                    id: 4,
-                    name: 'Татарский государственный театр кукол Экият',
-                    cost: 0,
-                    geoloc: 'Петербургская ул., 57',
-                    lat: 55.780296, 
-                    lng: 49.138694
-                }
-            ]
-        },
-        {
-            name: 'Нижний Новгород',
-            details: '',
-            nextMove: Date.parse("2024-09-07 22:00:00"),
-            image:'nn',
-            visits: [
-            ]
-        },
-        {
-            name: 'Санкт-Петербург',
-            details: 'Красуйся град Петров и стой неколебимо как Россия &#x1f1f7;&#x1f1fa;',
-            image:'spb',
-            nextMove: Date.parse("2025-08-30 20:00:00"),
-            visits: [
-            ]
-        }
-    ];
+
 
     // Function to update city information
     function updateCityInfo() {
@@ -229,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="city-info">
                     <h1>${city.name}</h1>
                     <p>${city.details}</p>
-                    ${index === current_city_index ? `<ul id="visits-list">${renderVisits(city.visits)}</ul>
-                    <p>Время до поездки в следующий город: <span id="countdown">--</span></p>` : ''}
+                    ${index === current_city_index ? `<ul id="visits-list">${renderVisits(city.visits ? city.visits : [])}</ul>
+                    <p>Время до выезда: <span id="countdown">--</span></p>` : ''}
                 </div>
             `;
             countdownElement = document.getElementById('countdown')
@@ -335,7 +154,6 @@ document.addEventListener('DOMContentLoaded', function () {
         updateCarouselPosition();
     });
 
-    updateCityInfo();
     ///////////////////////////////////////////////////////////////////////
     let startPos = 0
     let sliderScroll = 0
