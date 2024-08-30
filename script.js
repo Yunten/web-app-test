@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let countdownElement = document.getElementById('countdown');
     let max_height = 0
 
-    let current_city_index = 0
+    let current_city_index = 3
 
     // Array of cities
     const cities = [
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             name: 'Лазаревское (Сочи)',
-            details: '',
+            details: 'Звучит хайпово',
             nextMove: Date.parse("2024-09-04 11:00:00"),
             image:'lazr',
             visits: [
@@ -357,13 +357,6 @@ document.addEventListener('DOMContentLoaded', function () {
         startPos = getPositionY(event)
 
         slider.classList.remove("smoothscroll")
-
-        if(enable_blocks){
-            if (!event.srcElement || event.srcElement.id !== "to-current-city"){
-                event.preventDefault();
-                event.stopImmediatePropagation();
-            }
-        }
         last_point = startPos
 
     }
@@ -380,8 +373,10 @@ document.addEventListener('DOMContentLoaded', function () {
         last_point = currentPos
 
         if(enable_blocks){
-            event.preventDefault();
-            event.stopImmediatePropagation();
+            if (!event.srcElement || event.srcElement.id !== "to-current-city"){
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
         }
         
     }
@@ -391,41 +386,15 @@ document.addEventListener('DOMContentLoaded', function () {
         //console.log('Add ',move_units, 'Current',current_height,'MAx ',max_height)
         return Math.max( Math.min( current_height + move_units,max_height),0)
     }
-    
-    function touchEnd(event) {
-        
-        if(enable_blocks){
-            if (!event.srcElement || event.srcElement.id !== "to-current-city"){
-                event.preventDefault();
-                event.stopImmediatePropagation();
-            }
-        }
-    }
-    
-    let movable = false
-    function mouseDown(event) {
-        startPos = event.y
-        sliderScroll = slider.scrollLeft
-        slider.classList.remove("smoothscroll")
-        movable = true
-    }
-    
-    function mouseMove(event) {
-        if(!movable)
-            return
-        currentPos = event.x
-        slider.scrollLeft = sliderScroll + startPos - currentPos
-    }
-    
+
     function mouseWheel(e) {
         current_height = Math.max( Math.min( current_height+e.deltaY,max_height),0)
         
         carousel.style.transform = `translateY(-${current_height}px)`;
     }
     
-    document.addEventListener('touchstart', touchStart,{ passive: false })
+    document.addEventListener('touchstart', touchStart)
     document.addEventListener('touchmove', touchMove,{ passive: false })
-    document.addEventListener('touchend', touchEnd,{ passive: false })
     document.addEventListener('wheel', mouseWheel,{ passive: false })
 
     window.Telegram.WebApp.MainButton.text = 'Инфо'

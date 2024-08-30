@@ -27,10 +27,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 3.8s ease-in-out;
-    -webkit-overflow-scrolling: touch; 
-}
-
-.smoothscroll {
+    -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
 }
 
@@ -87,13 +84,30 @@ body {
     text-align: center;
     line-height: 30px;
 }
-
+ 
 #to-current-city {
     bottom: 50px;
     right: 10px;
     width: 150px;
-    background: #28a745;
+    height: 50px;
+    color:#ffffff;
+    background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC  51%, #02AAB0  100%);
+    margin: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;            
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
 }
+
+#to-current-city:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 2px -1px 2px #000000;
+  }
 
 #visits-list {
     list-style: none;
